@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="layout/main.html">
+
+<div layout:fragment="frag">
+    <div class="card">
+        <div class="card-header">
+
+        </div>
+        <div class="card-body">
+                <div class="row mt-3">
+                    <div class="col-7 mx-auto">
+                        <div th:if="${task.status==0 || task.status==1}">
+                            <form th:action="@{/edittask}" method="post"  >
+                                <input type="hidden" name="task_id" th:value="${task.id}">
+                                <label th:text="#{label.title}"></label>
+                                <input type="text" name="name" th:value="${task.title}" class="form-control"><br>
+                                <label th:text="#{label.description}"></label>
+                                <textarea name="description" th:text="${task.description}" class="form-control"></textarea><br>
+                                <label th:text="#{label.status}"></label>
+                                <select name="status" class ="form-control">
+                                    <option value="0" th:selected="${task.status==0}">TO DO</option>
+                                    <option value="1" th:selected="${task.status==1}">IN TEST</option>
+                                    <option value="2" th:selected="${task.status==2}">DONE</option>
+                                    <option value="3" th:selected="${task.status==3}">FAILED</option>
+                                </select>
+                                <input type="hidden" th:value="${folder_id}" name="folder_id">
+                                <br>
+                                <button type="submit" class="btn btn-success" th:text="#{button.update}"></button>&nbsp;
+                                <a type="button" class="btn btn-danger" th:href="@{'/deletetask/'+${folder_id}+'/'+${task.id}}" th:text="#{button.delete}"></a>
+                            </form>
+                        </div>
+                        <div th:if="${task.status==2 || task.status==3}">
+                            <input type="hidden" name="task_id" th:value="${task.id}">
+                            <label th:text="#{label.title}"></label>
+                            <p type="text" name="name" th:text="${task.title}" ></p><br>
+                            <label th:text="#{label.description}"></label>
+                            <p name="description" th:text="${task.description}" ></p><br>
+                            <label th:text="#{label.status}"></label>
+                                <p  th:if="${task.status==2}" class="text-success">DONE</p>
+                                <p th:if="${task.status==3}" class="text-warning">FAILED</p>
+                            <br>
+                            <a type="button" class="btn btn-danger" th:href="@{'/deletetask/'+${folder_id}+'/'+${task.id}}" th:text="#{button.delete}"></a>
+                            <a type="button" class="btn btn-primary" th:href="@{'/details/'+${folder_id}}" th:text="#{button.back}"></a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<br>
+    <div class="card">
+        <div class="card-header">
+
+        </div>
+        <div class="card-body">
+            <div class="row mt-3">
+                <div class="col-7 mx-auto">
+                    <h4 class="text-center" th:text="#{label.comments}"></h4>
+                    <form th:action="@{/addcomment}" method="post">
+                        <input type="hidden" th:value="${folder_id}" name="folder_id">
+                        <input type="hidden" th:value="${task.id}" name="task_id">
+                        <textarea name="comment" class="form-control" th:placeholder="#{label.yourcomment}" ></textarea><br>
+                        <button type="submit" class="btn btn-success" th:text="#{button.send}"></button>
+                    </form>
+                </div><br><br>
+                <div class="col-9 mx-auto" th:each="com:${comments}"><hr class="w-80">
+                    <p th:text="${com.comment}" class="w-80"></p>
+                    <label>uaqyt?</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+</html>

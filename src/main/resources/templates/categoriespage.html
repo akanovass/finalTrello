@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="layout/main.html">
+
+<div layout:fragment="frag">
+    <h4 style="text-align: center;" th:text="#{label.categories}"></h4>
+    <!-- Button trigger modal -->
+    <a type="button" class="text-dark fs-6 fw-bold pb-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        + <label th:text="#{button.newcategory}"></label>
+    </a>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/addcategory}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Name</label>
+                        <input type="text" name="name" placeholder="Category Name" class="form-control"><br>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><br>
+    <table class="table w-75">
+        <tr>
+            <th th:text="#{label.id}"></th>
+            <th th:text="#{label.name}"></th>
+            <th></th>
+        </tr>
+        <tr th:each="c:${allCategories}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.name}"></td>
+            <td style="display: flex; justify-content: right; ">
+                <a th:href="@{'/categorydetails/'+${c.id}}" class="btn btn-primary"  th:text="#{button.details}"></a>
+            </td>
+        </tr>
+    </table>
+</div>
+</html>

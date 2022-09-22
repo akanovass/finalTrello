@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="layout/main.html">
+
+<div layout:fragment="frag">
+
+
+   <div class="row mt-3">
+       <div class="col-7 mx-auto">
+           <div th:if="${delete}">
+               <div  class="alert alert-warning alert-dismissible fade show" role="alert">
+                   <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+           </div>
+
+
+           <form th:action="@{/updatecategoryname}" method="post">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalUpdateLabel" th:text="${category.name}"></h5>
+               </div>
+               <div class="modal-body">
+                   <input type="hidden" name="category_id" th:value="${category.id}">
+                   <br><br>
+                   <label>Name</label>
+                   <input type="text" name="name" th:value="${category.name}" class="form-control"><br>
+               </div>
+               <div class="modal-footer">
+
+                   <button type="submit" class="btn btn-primary">Update</button>
+                   <a th:href="@{'/deletecategory/'+${category.id}}" class="btn btn-danger">Delete</a>
+               </div>
+           </form>
+       </div>
+   </div>
+</div>
+
+</html>
