@@ -90,7 +90,7 @@ public class HomeController {
         return "categoriespage";
     }
 
-    @PostMapping("/deletecategory/{id}")
+    @GetMapping("/deletecategory/{id}")
     public String deletecategory(@PathVariable(name = "id") Long id, Model model){
         taskCategoriesService.deleteTaskCategories(id);
 System.out.println(taskCategoriesService.isCheckForDeletion() + " QARAAAAAA");
@@ -100,7 +100,7 @@ System.out.println(taskCategoriesService.isCheckForDeletion() + " QARAAAAAA");
             redirect = "redirect:/categorydetails/" + id;
             model.addAttribute("delete", true);
         }
-        
+
         return  redirect;
     }
 
